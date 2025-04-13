@@ -1,0 +1,23 @@
+[
+  {
+    "id": "evt_1d7065ee",
+    "type": "deposit",
+    "user_id": "user_0003",
+    "amount": 4936,
+    "timestamp": "2024-01-01T00:00:00"
+  },
+  {
+    "id": "evt_1d7065ee",
+    "type": "deposit",
+    "user_id": "user_0003",
+    "amount": 4936,
+    "timestamp": "2024-01-01T00:00:00"
+  },
+  {
+    "id": "evt_0b55cbdc",
+    "type": "deposit",
+    "user_id": "user_0051",
+    "amount": 9718,
+    "timestamp": "2024-01-01T00:01:00"
+  }
+]
