@@ -4,7 +4,7 @@ require 'oj'
 require './lib/models/event'
 # Takes the event files and process the events to find duplicates
 class EventProcessor
-  attr_accessor :ids, :duplicates, :events, :file
+  attr_accessor :ids, :duplicates, :events
 
   def initialize(file:)
     @file = file
@@ -24,6 +24,8 @@ class EventProcessor
   end
 
   private
+
+  attr_reader :file
 
   def read_file(opened_file)
     Oj.load(opened_file).each do |event|

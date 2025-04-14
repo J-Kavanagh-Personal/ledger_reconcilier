@@ -17,8 +17,12 @@ class AggregateProcessor
     end
   end
 
+  private
+
+  attr_reader :transactions, :events
+
   def events_amount
-    @events.reduce(0) do |sum, (_event_id, event)|
+    events.reduce(0) do |sum, (_event_id, event)|
       if event.type == 'deposit'
         sum + event.amount
       else
@@ -28,7 +32,7 @@ class AggregateProcessor
   end
 
   def transactions_amount
-    @transactions.reduce(0) do |sum, (_transaction_id, transaction)|
+    transactions.reduce(0) do |sum, (_transaction_id, transaction)|
       if transaction.type == 'deposit'
         sum + transaction.amount
       else

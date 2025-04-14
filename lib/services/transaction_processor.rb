@@ -16,15 +16,17 @@ class TransactionProcessor
   end
 
   def process
-    File.open(@file) do |file|
+    File.open(file) do |file|
       read_file(file)
     end
   end
 
   private
 
+  attr_reader :file, :event_ids
+
   def orphan_check(transaction)
-    if !@event_ids.intersect?(Set[transaction['reference_id']])
+    if !event_ids.intersect?(Set[transaction['reference_id']])
       @orphaned_transactions << transaction['id']
     else
       @references.add(transaction['reference_id'])

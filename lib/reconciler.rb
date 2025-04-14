@@ -13,10 +13,8 @@ class Reconciler
   end
 
   def run_report
-    event_processor = EventProcessor.new(file: @events)
-    event_processor.process
-    transaction_processor = TransactionProcessor.new(file: @bank_txns, event_ids: event_processor.ids)
-    transaction_processor.process
+    event_processor = event_process
+    transaction_processor = transaction_process(event_processor.ids)
     missing_txn = event_processor.check_references(transaction_processor.references)
     balance = AggregateProcessor.new(transactions: transaction_processor.transactions,
                                      events: event_processor.events.except(*missing_txn)).process
@@ -24,6 +22,8 @@ class Reconciler
   end
 
   private
+
+  attr_reader :events, :bank_txns
 
   def report(event_processor, transaction_processor, balance, missing_txn)
     {
@@ -33,5 +33,17 @@ class Reconciler
       balance_ok: balance[0],
       final_reconciled_balance: balance[1]
     }
+  end
+
+  def transaction_process(ids)
+    transaction_processor = TransactionProcessor.new(file: bank_txns, event_ids: ids)
+    transaction_processor.process
+    transaction_processor
+  end
+
+  def event_process
+    event_processor = EventProcessor.new(file: events)
+    event_processor.process
+    event_processor
   end
 end
